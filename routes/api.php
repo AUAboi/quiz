@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('questions', [QuestionController::class, 'index'])->name('questions');
-Route::post('questions', [QuestionController::class, 'store'])->name('questions.store');
+Route::post('questions', [QuestionController::class, 'store']);
+Route::delete('questions/{id}', [QuestionController::class, 'destroy']);
+
+Route::get('options/{id}', [OptionController::class, 'index'])->name('options');
+Route::post('options/{qid}/{oid}', [OptionController::class, 'store'])->name('options.store');

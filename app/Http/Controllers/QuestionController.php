@@ -47,4 +47,9 @@ class QuestionController extends Controller
         $question->options()->createMany($data);
         return redirect()->back();
     }
+
+    public function destory($question_id)
+    {
+        return Question::find($question_id)->delete();
+    }
 }
