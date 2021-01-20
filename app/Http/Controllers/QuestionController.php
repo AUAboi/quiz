@@ -15,6 +15,12 @@ class QuestionController extends Controller
         return $question;
     }
 
+    public function show()
+    {
+        $question = Question::all();
+        return $question;
+    }
+
     public function store(Request $request)
     {
 
@@ -44,8 +50,10 @@ class QuestionController extends Controller
             }
         }
 
-        $question->options()->createMany($data);
-        return redirect()->back();
+        if (!$question->options()->createMany($data)) {
+            return "Error occured";
+        }
+        return "Added successfully";
     }
 
     public function destory($question_id)
