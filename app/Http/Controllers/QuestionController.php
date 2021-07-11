@@ -11,7 +11,8 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        $question = Question::select('id', 'question')->get()->random(2);
+        $question = Question::select('id', 'question')->inRandomOrder()->get();
+
         return $question;
     }
 
@@ -36,7 +37,7 @@ class QuestionController extends Controller
 
         $data = [];
         foreach ($request->option as $option) {
-            if (isset($option['is_correct'])) {
+            if (($option['is_correct'])) {
                 $data[] = [
                     'option' => $option['name'],
                     'is_correct' => 1,
@@ -56,8 +57,11 @@ class QuestionController extends Controller
         return "Added successfully";
     }
 
-    public function destory($question_id)
+    public function destroy($question_id)
     {
-        return Question::find($question_id)->delete();
+        if (Question::find($question_id)->delete()) {
+            return "Deleted successfully";
+        }
+        return "Error";
     }
 }

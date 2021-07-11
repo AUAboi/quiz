@@ -20,13 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::get('questions', [QuestionController::class, 'index'])->name('questions');
-
 Route::middleware('auth:sanctum')->post('/questions', [QuestionController::class, 'store'])->name('questions.store');
+Route::middleware('auth:sanctum')->delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+
+Route::get('/questions', [QuestionController::class, 'index'])->name('questions');
 Route::get('/questions/show', [QuestionController::class, 'show'])->name('questions.show');
 
-Route::delete('questions/{id}', [QuestionController::class, 'destroy']);
-
-Route::get('options/{id}', [OptionController::class, 'index'])->name('options');
-Route::post('options/{qid}/{oid}', [OptionController::class, 'store'])->name('options.store');
+Route::get('/options/{id}', [OptionController::class, 'index'])->name('options');
+Route::post('/options/{qid}/{oid}', [OptionController::class, 'store'])->name('options.store');

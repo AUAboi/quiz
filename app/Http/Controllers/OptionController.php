@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class OptionController extends Controller
 {
-    public function index(Question $question, $question_id)
+    public function index($question_id)
     {
         $option = Option::select(['id', 'option'])->where('question_id', $question_id)->get();
         return $option;
@@ -26,7 +26,7 @@ class OptionController extends Controller
         if (count($option)) {
             return 1;
         } else {
-            return "Not Found";
+            return 0;
         }
     }
 }
