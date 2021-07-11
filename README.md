@@ -1,3 +1,3 @@
 ## A Quiz Game project made with laravel framework
 
-(work in progress)
+This is backend api for my quiz game.
