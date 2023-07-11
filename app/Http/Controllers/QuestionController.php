@@ -18,7 +18,7 @@ class QuestionController extends Controller
 
     public function show()
     {
-        $question = Question::all();
+        $question = Question::with(['options'])->get();
         return $question;
     }
 
