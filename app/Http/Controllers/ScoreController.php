@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Score;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class ScoreController extends Controller
             'score' => 'required|min:0|max:' . Question::all()->count()
         ]);
 
-        auth()->user()->scores->create([
+        Score::create([
+            'user_id' =>  auth()->id(),
             'score' => $request->score
         ]);
 

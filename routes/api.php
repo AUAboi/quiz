@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ScoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/score/store', [ScoreController::class, 'store'])->name('score.store');
 });
 
 Route::get('/questions', [QuestionController::class, 'index'])->name('questions');
