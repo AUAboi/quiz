@@ -17,7 +17,7 @@ class OptionController extends Controller
 
 
     //Checks if the given option is correct or not
-    public function store($question_id, $option_id)
+    public function verify($question_id, $option_id)
     {
         $option = Option::all()
             ->where('question_id', $question_id)
