@@ -26,8 +26,16 @@ Route::post('/login', [UserController::class, 'login'])->name('user.login');
 Route::post('/register', [UserController::class, 'store'])->name('user.store');
 
 Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
+    Route::get('/users/all', [UserController::class, 'index']);
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+
+    Route::post('/users-import', [UserController::class, 'import'])->name('users.import');
+
+    Route::post('/questions-import', [QuestionController::class, 'import'])->name('questions.import');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {

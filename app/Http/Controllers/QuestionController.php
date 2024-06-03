@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionRequest;
+use App\Imports\QuestionsImport;
 use App\Models\Option;
 use App\Models\Question;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QuestionController extends Controller
 {
@@ -55,5 +57,17 @@ class QuestionController extends Controller
             return "Deleted successfully";
         }
         return "Error";
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv|file'
+        ]);
+
+
+        Excel::import(new QuestionsImport, $request->file('file'));
+
+        return 'Success';
     }
 }

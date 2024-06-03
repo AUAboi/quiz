@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UsersImport;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        return User::all();
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -39,5 +45,25 @@ class UserController extends Controller
         } else {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
+    }
+
+    public function destroy($user_id)
+    {
+        if (User::find($user_id)->delete()) {
+            return "Deleted successfully";
+        }
+        return "Error";
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv|file'
+        ]);
+
+
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return 'Success';
     }
 }

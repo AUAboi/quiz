@@ -11,7 +11,7 @@ class OptionController extends Controller
 {
     public function index($question_id)
     {
-        $option = Option::select(['id', 'option'])->where('question_id', $question_id)->get();
+        $option = Option::select(['id', 'option'])->where('question_id', $question_id)->inRandomOrder()->get();
         return $option;
     }
 
